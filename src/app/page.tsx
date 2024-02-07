@@ -5,10 +5,8 @@ import { CreatePost } from "~/app/_components/create-post";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 
-api.post.hello.query({ text: 'test' })
-
 export default async function Home() {
-    noStore();
+    // noStore();
     const hello = await api.post.hello.query({ text: "from tRPC" });
     const session = await getServerAuthSession();
 
