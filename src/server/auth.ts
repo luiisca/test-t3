@@ -17,6 +17,7 @@ import Welcome from '~/emails/welcome'
 import { env } from "~/env";
 import { db } from "~/server/db";
 import { TRPCError } from "@trpc/server";
+import SMTPTransport from 'nodemailer/lib/smtp-transport';
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -43,7 +44,7 @@ async function sendVerificationRequest(params: SendVerificationRequestParams) {
     const { identifier, url, provider, theme } = params
     const { host } = new URL(url)
     // NOTE: You are not required to use `nodemailer`, use whatever you want.
-    const transport = createTransport(provider.server)
+    const transport = createTransport(provider.server as Record<string, string>)
 
     const html = await renderAsync(createElement(Welcome, { url }));
     const text = await renderAsync(createElement(Welcome, { url }), {
