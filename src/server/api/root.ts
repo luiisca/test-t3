@@ -1,4 +1,5 @@
 import { postRouter } from "~/server/api/routers/post";
+import { externalRouter } from "~/server/api/routers/externalRouter";
 import { createTRPCRouter } from "~/server/api/trpc";
 
 /**
