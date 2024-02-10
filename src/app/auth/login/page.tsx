@@ -14,7 +14,7 @@ export default async function Login() {
     console.log("------------🎉🎉🎉COOKIES END!!🎉🎉🎉--------")
 
 
-    const res = await fetch(`https://test-t3-orrb8jfu9-luiscadillo.vercel.app/api/auth/csrf`);
+    const res = await fetch(`https://test-t3-orrb8jfu9-luiscadillo.vercel.app/api/auth/csrf`, { cache: "no-store" });
     console.warn('CSRF RESPONSE 🎁', res)
     const dataTest = await res.json() as { csrfToken: string };
     console.warn('CSRF RESPONSE.json 🎁', dataTest)
