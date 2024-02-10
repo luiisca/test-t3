@@ -13,6 +13,19 @@ export default async function Login() {
     console.log(cookiesRes)
     console.log("------------🎉🎉🎉COOKIES END!!🎉🎉🎉--------")
 
+
+    const res = await fetch(`https://https://test-t3-orrb8jfu9-luiscadillo.vercel.app/api/auth/csrf`);
+    console.warn('CSRF RESPONSE 🎁', res)
+    const dataTest = await res.json() as { csrfToken: string };
+    console.warn('CSRF RESPONSE.json 🎁', dataTest)
+
+    if (!res.ok) {
+        console.warn('CSRF RESPONSE not ok!!🔥')
+        throw new Error('Failed to fetch CSRF token');
+    }
+    const data = await res.json() as { csrfToken: string };
+    console.log("csrfToken", data.csrfToken)
+
     if (session?.user) {
         return redirect('/simulation')
     } else {
