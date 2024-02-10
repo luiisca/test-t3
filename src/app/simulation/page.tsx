@@ -5,6 +5,7 @@ import { fetchCsrfToken } from "../get-csrf-token";
 
 export default async function Simulation() {
     const session = await getServerAuthSession();
+    const csrfToken = await fetchCsrfToken()
 
     if (!session?.user) {
         // return redirect('/auth/login')
@@ -14,8 +15,6 @@ export default async function Simulation() {
             </p>
         )
     } else {
-        const csrfToken = await fetchCsrfToken()
-
         return (
             <div>
                 <h1>Simulation</h1>
