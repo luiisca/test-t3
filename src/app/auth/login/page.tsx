@@ -22,7 +22,7 @@ export default async function Login() {
                     console.warn('CSRF RESPONSE not ok!!🔥')
                     throw new Error('Failed to fetch CSRF token');
                 }
-                const data = await response.json();
+                const data = await response.json() as { csrfToken: string };
                 return data.csrfToken;
             } catch (error) {
                 console.error('❌Error fetching CSRF token:', error);
