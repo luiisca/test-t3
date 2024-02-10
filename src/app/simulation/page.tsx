@@ -1,11 +1,12 @@
+// import { cookies } from "next/headers";
+import { getCsrfToken } from "next-auth/react";
+
 import { env } from "~/env";
 // import { redirect } from "next/navigation";
 import { getServerAuthSession } from "~/server/auth";
-import { fetchCsrfToken } from "../get-csrf-token";
 
 export default async function Simulation() {
     const session = await getServerAuthSession();
-    const csrfToken = await fetchCsrfToken().then(data => data?.csrfToken)
 
     if (!session?.user) {
         // return redirect('/auth/login')
@@ -15,6 +16,8 @@ export default async function Simulation() {
             </p>
         )
     } else {
+        const csrfToken = await getCsrfToken()
+
         return (
             <div>
                 <h1>Simulation</h1>

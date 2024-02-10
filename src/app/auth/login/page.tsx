@@ -1,9 +1,9 @@
 import { cookies } from "next/headers";
+import { getCsrfToken } from "next-auth/react";
 
 import { env } from "~/env";
 import { redirect } from "next/navigation";
 import { getServerAuthSession } from "~/server/auth";
-import { getCsrfToken } from "next-auth/react";
 
 export default async function Login() {
     const session = await getServerAuthSession();
