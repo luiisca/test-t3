@@ -4,7 +4,7 @@ export const fetchCsrfToken = async () => {
     try {
         const host = headers().get("host");
         const protocal = process?.env.NODE_ENV === "development" ? "http" : "https"
-        let res = await fetch(`${protocal}://${host}/api/auth/csrf`, { cache: "no-store" });
+        const res = await fetch(`${protocal}://${host}/api/auth/csrf`, { cache: "no-store" });
 
         if (!res.ok) {
             console.warn('CSRF RESPONSE not ok!!🔥')
