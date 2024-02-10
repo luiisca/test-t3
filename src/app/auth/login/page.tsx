@@ -24,6 +24,7 @@ export default async function Login() {
                 }
             }
         })
+        console.log('Login - csrfToken', csrfToken)
 
         return (
             <div>

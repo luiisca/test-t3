@@ -17,6 +17,7 @@ export default async function Simulation() {
         )
     } else {
         const csrfToken = await getCsrfToken()
+        console.log('Simulation - csrfToken', csrfToken)
 
         return (
             <div>
