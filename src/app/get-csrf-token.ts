@@ -32,8 +32,11 @@ export const fetchCsrfToken = async () => {
         console.log("csrfToken", data.csrfToken)
 
         return Object.keys(data).length > 0 ? data : null // Return null if data empty
+
+        console.log('-------------✅fetchCsrfToken() END---------')
     } catch (error) {
         console.error('❌Error fetching CSRF token:', error);
+
+        return null
     }
-    console.log('-------------✅fetchCsrfToken() END---------')
 };
