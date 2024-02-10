@@ -10,7 +10,7 @@ export default async function Simulation() {
     } else {
         const csrfToken = await fetch(`${env.NEXTAUTH_URL}/api/auth/csrf`)
             .then(res => res.json())
-            .then(csrfTokenObject => csrfTokenObject?.csrfToken);
+            .then(csrfTokenObject => csrfTokenObject?.csrfToken) as string;
 
         return (
             <div>

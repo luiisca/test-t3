@@ -14,7 +14,7 @@ export default async function Login() {
             headers: headers()
         })
             .then(res => res.json())
-            .then(csrfTokenObject => csrfTokenObject?.csrfToken);
+            .then(csrfTokenObject => csrfTokenObject?.csrfToken) as string;
 
         return (
             <div>

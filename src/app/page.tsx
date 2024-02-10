@@ -56,115 +56,115 @@ export default async function Home({ searchParams }: { searchParams: { inflation
                     </div>
                 </div>
 
-                <Inflation value={searchParams.inflation} />
+                {/* <Inflation value={searchParams.inflation} /> */}
                 {/* <CrudShowcase /> */}
             </div>
         </main>
     );
 }
 
-async function CrudShowcase() {
-    const session = await getServerAuthSession();
-    if (!session?.user) return null;
-
-    const latestPost = await api.post.getLatest.query();
-
-    return (
-        <div className="w-full max-w-xs">
-            {latestPost ? (
-                <p className="truncate">Your most recent post: {latestPost.name}</p>
-            ) : (
-                <p>You have no posts yet.</p>
-            )}
-
-            <CreatePost />
-        </div>
-    );
-}
-
-async function fetchInflationRate(country: string) {
-    const apiUrl = `https://www.statbureau.org/calculate-inflation-rate-json`;
-    try {
-
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                country,
-                start: '2018/1/1', // Start of the current year
-                end: '2018/12/1', // End of the current year
-            }),
-        });
-        const data = await response.json();
-        console.log(`INFLATION DATA 💰 for ${country}: `, data)
-    } catch (e) {
-        console.log('INFLATION error ❌', e)
-    }
-}
-
-async function test(country: string) {
-    let value = [] as Array<
-        Record<string, string> & {
-            yearly_rate_pct: string;
-            error?: string;
-        }
-    >;
-    try {
-        const result = await fetch(
-            `https://api.api-ninjas.com/v1/inflation?country=${country}`,
-            {
-                method: "GET",
-                headers: {
-                    "X-Api-Key": env.NINJA_API_KEY || "",
-                    "Content-Type": "application/json",
-                },
-            }
-        );
-        value = await result.json();
-        if (('error' in value)) {
-            console.log('ERROR mssg ❌', value)
-            return {
-                error: value.error
-            }
-        } else {
-            console.log('RATE ✅', value)
-            return {
-                yearlyInflation: value[0]?.yearly_rate_pct
-            }
-        }
-    } catch (e) {
-        console.log('ERROR ❌', e)
-        return {
-            error: e,
-        }
-    }
-}
-async function Inflation({ value }: { value: string }) {
-    const session = await getServerAuthSession();
-    if (!session?.user) return null;
-
-    async function getInflation(formData: FormData) {
-        "use server"
-
-        const country = formData.get('country') as string
-        const result = await fetchInflationRate(country);
-        // if ('error' in result) {
-        //     redirect(`?error=${result.error}`)
-        // } else {
-        //     redirect(`?inflation=${result.yearlyInflation}`)
-        // }
-
-    }
-
-    return (
-        <div>
-            <p>Inflation: {value}</p>
-            <form action={getInflation}>
-                <input type="text" name="country" className="text-red-500" />
-                <button type="submit">Get country!</button>
-            </form>
-        </div>
-    )
-}
+// async function CrudShowcase() {
+//     const session = await getServerAuthSession();
+//     if (!session?.user) return null;
+//
+//     const latestPost = await api.post.getLatest.query();
+//
+//     return (
+//         <div className="w-full max-w-xs">
+//             {latestPost ? (
+//                 <p className="truncate">Your most recent post: {latestPost.name}</p>
+//             ) : (
+//                 <p>You have no posts yet.</p>
+//             )}
+//
+//             <CreatePost />
+//         </div>
+//     );
+// }
+//
+// async function fetchInflationRate(country: string) {
+//     const apiUrl = `https://www.statbureau.org/calculate-inflation-rate-json`;
+//     try {
+//
+//         const response = await fetch(apiUrl, {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify({
+//                 country,
+//                 start: '2018/1/1', // Start of the current year
+//                 end: '2018/12/1', // End of the current year
+//             }),
+//         });
+//         const data = await response.json();
+//         console.log(`INFLATION DATA 💰 for ${country}: `, data)
+//     } catch (e) {
+//         console.log('INFLATION error ❌', e)
+//     }
+// }
+//
+// async function test(country: string) {
+//     let value = [] as Array<
+//         Record<string, string> & {
+//             yearly_rate_pct: string;
+//             error?: string;
+//         }
+//     >;
+//     try {
+//         const result = await fetch(
+//             `https://api.api-ninjas.com/v1/inflation?country=${country}`,
+//             {
+//                 method: "GET",
+//                 headers: {
+//                     "X-Api-Key": env.NINJA_API_KEY || "",
+//                     "Content-Type": "application/json",
+//                 },
+//             }
+//         );
+//         value = await result.json();
+//         if (('error' in value)) {
+//             console.log('ERROR mssg ❌', value)
+//             return {
+//                 error: value.error
+//             }
+//         } else {
+//             console.log('RATE ✅', value)
+//             return {
+//                 yearlyInflation: value[0]?.yearly_rate_pct
+//             }
+//         }
+//     } catch (e) {
+//         console.log('ERROR ❌', e)
+//         return {
+//             error: e,
+//         }
+//     }
+// }
+// async function Inflation({ value }: { value: string }) {
+//     const session = await getServerAuthSession();
+//     if (!session?.user) return null;
+//
+//     async function getInflation(formData: FormData) {
+//         "use server"
+//
+//         const country = formData.get('country') as string
+//         const result = await fetchInflationRate(country);
+//         // if ('error' in result) {
+//         //     redirect(`?error=${result.error}`)
+//         // } else {
+//         //     redirect(`?inflation=${result.yearlyInflation}`)
+//         // }
+//
+//     }
+//
+//     return (
+//         <div>
+//             <p>Inflation: {value}</p>
+//             <form action={getInflation}>
+//                 <input type="text" name="country" className="text-red-500" />
+//                 <button type="submit">Get country!</button>
+//             </form>
+//         </div>
+//     )
+// }
