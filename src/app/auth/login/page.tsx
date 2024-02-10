@@ -10,11 +10,11 @@ export default async function Login() {
     if (session?.user) {
         return redirect('/simulation')
     } else {
-        const csrfToken = await fetch(`${env.NEXTAUTH_URL}/api/auth/csrf`, {
+        const csrfToken = (await fetch(`${env.NEXTAUTH_URL}/api/auth/csrf`, {
             headers: headers()
-        })
-            .then(res => res.json())
-            .then(csrfTokenObject => csrfTokenObject?.csrfToken) as string;
+        }).then(res => res.json()) as {
+            csrfToken: string
+        }).csrfToken
 
         return (
             <div>

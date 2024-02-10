@@ -1,3 +1,5 @@
+import { headers } from "next/headers";
+
 import { env } from "~/env";
 import { redirect } from "next/navigation";
 import { getServerAuthSession } from "~/server/auth";
@@ -8,9 +10,11 @@ export default async function Simulation() {
     if (!session?.user) {
         return redirect('/auth/login')
     } else {
-        const csrfToken = await fetch(`${env.NEXTAUTH_URL}/api/auth/csrf`)
-            .then(res => res.json())
-            .then(csrfTokenObject => csrfTokenObject?.csrfToken) as string;
+        const csrfToken = (await fetch(`${env.NEXTAUTH_URL}/api/auth/csrf`, {
+            headers: headers()
+        }).then(res => res.json()) as {
+            csrfToken: string
+        }).csrfToken
 
         return (
             <div>
