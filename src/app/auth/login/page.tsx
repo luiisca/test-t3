@@ -1,14 +1,19 @@
 import { headers } from "next/headers";
 
 import { env } from "~/env";
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 import { getServerAuthSession } from "~/server/auth";
 
 export default async function Login() {
     const session = await getServerAuthSession();
 
     if (session?.user) {
-        return redirect('/simulation')
+        // return redirect('/simulation')
+        return (
+            <p>
+                Not Authenticated!
+            </p>
+        )
     } else {
         const csrfToken = (await fetch(`${env.NEXTAUTH_URL}/api/auth/csrf`, {
             headers: headers()
@@ -18,6 +23,7 @@ export default async function Login() {
 
         return (
             <div>
+                <p>Authenticated!</p>
                 <form
                     method="POST"
                     action={`${env.NEXTAUTH_URL}/api/auth/signin/github`}
