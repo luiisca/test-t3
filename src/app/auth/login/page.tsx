@@ -13,6 +13,24 @@ export default async function Login() {
     if (session?.user) {
         return redirect('/simulation')
     } else {
+        const fetchCsrfToken = async () => {
+            try {
+                const response = await fetch(`${env.NEXTAUTH_URL}/api/auth/csrf`, {
+                    headers: headers()
+                });
+                if (!response.ok) {
+                    console.warn('CSRF RESPONSE not ok!!🔥')
+                    throw new Error('Failed to fetch CSRF token');
+                }
+                const data = await response.json();
+                return data.csrfToken;
+            } catch (error) {
+                console.error('❌Error fetching CSRF token:', error);
+                // Handle error
+                // For example, you can redirect to an error page
+            }
+        };
+        fetchCsrfToken()
         // const csrfToken = (await fetch(`${env.NEXTAUTH_URL}/api/auth/csrf`, {
         //     headers: headers()
         // }).then(res => res.json()) as {
