@@ -70,7 +70,7 @@ async function sendVerificationRequest(params: SendVerificationRequestParams) {
  */
 export const authOptions: NextAuthOptions = {
     pages: {
-        signIn: "/auth/login",
+        // signIn: "/auth/login",
         signOut: "/auth/logout",
         error: "/auth/error", // Error code passed in query string as ?error=
         verifyRequest: "/auth/verify", // (used for check email message)
