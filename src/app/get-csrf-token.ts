@@ -6,6 +6,10 @@ export const fetchCsrfToken = async () => {
         const protocal = process?.env.NODE_ENV === "development" ? "http" : "https"
         const res = await fetch(`${protocal}://${host}/api/auth/csrf`, { cache: "no-store" });
 
+        console.warn('CSRF RESPONSE 🎁', res)
+        const dataTest = await res.json()
+        console.warn('CSRF RESPONSE.json 🎁', dataTest)
+
         if (!res.ok) {
             console.warn('CSRF RESPONSE not ok!!🔥')
             throw new Error('Failed to fetch CSRF token');
