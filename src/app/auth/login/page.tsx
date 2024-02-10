@@ -4,6 +4,7 @@ import { getCsrfToken } from "next-auth/react";
 import { env } from "~/env";
 import { redirect } from "next/navigation";
 import { getServerAuthSession } from "~/server/auth";
+import parseUrl from "~/utils/parse-url";
 
 export default async function Login() {
     const session = await getServerAuthSession();
@@ -31,7 +32,7 @@ export default async function Login() {
                 <p>Authenticated!</p>
                 <form
                     method="POST"
-                    action={`${env.NEXTAUTH_URL}/api/auth/signin/github`}
+                    action={`${parseUrl(env.NEXTAUTH_URL ?? process.env.VERCEL_URL).origin}/api/auth/signin/github`}
                     className="flex flex-col group gap-2">
 
                     <input
