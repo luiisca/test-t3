@@ -1,4 +1,4 @@
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 
 import { env } from "~/env";
 import { redirect } from "next/navigation";
@@ -7,9 +7,11 @@ import { fetchCsrfToken } from "~/app/get-csrf-token";
 
 export default async function Login() {
     const session = await getServerAuthSession();
-    console.log("------------🤯🤯🤯HEADERS!!🤯🤯🤯--------")
-    headers().forEach((val, key) => console.log(key, val))
-    console.log("------------🤯🤯🤯HEADERS!!🤯🤯🤯--------")
+    const cookiesRes = cookies().getAll();
+    console.log("------------🤯🤯🤯COOKIES START!!🤯🤯🤯--------")
+    // headers().forEach((val, key) => console.log(key, val))
+    console.log(cookiesRes)
+    console.log("------------🎉🎉🎉COOKIES END!!🎉🎉🎉--------")
 
     if (session?.user) {
         return redirect('/simulation')
