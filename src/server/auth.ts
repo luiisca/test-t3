@@ -69,6 +69,12 @@ async function sendVerificationRequest(params: SendVerificationRequestParams) {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
+    pages: {
+        signIn: "/auth/login",
+        signOut: "/auth/logout",
+        error: "/auth/error", // Error code passed in query string as ?error=
+        verifyRequest: "/auth/verify", // (used for check email message)
+    },
     callbacks: {
         session: ({ session, user }) => ({
             ...session,
@@ -84,10 +90,6 @@ export const authOptions: NextAuthOptions = {
             clientId: env.GITHUB_ID,
             clientSecret: env.GITHUB_SECRET,
         }),
-        // GoogleProvider({
-        //     clientId: env.GOOGLE_ID,
-        //     clientSecret: env.GOOGLE_SECRET,
-        // }),
         EmailProvider({
             server: {
                 host: env.EMAIL_SERVER_HOST,
