@@ -112,6 +112,7 @@ export const authOptions: NextAuthOptions = {
          * @see https://next-auth.js.org/providers/github
          */
     ],
+    secret: process.env.NEXTAUTH_SECRET,
 };
 /**
  * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.
