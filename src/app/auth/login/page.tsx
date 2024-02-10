@@ -30,7 +30,7 @@ export default async function Login() {
                 // For example, you can redirect to an error page
             }
         };
-        fetchCsrfToken()
+        await fetchCsrfToken()
         // const csrfToken = (await fetch(`${env.NEXTAUTH_URL}/api/auth/csrf`, {
         //     headers: headers()
         // }).then(res => res.json()) as {
