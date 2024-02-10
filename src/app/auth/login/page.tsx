@@ -19,6 +19,7 @@ export default async function Login() {
         }
     })
     try {
+        console.log('Login - NEXTAUTH_URL', process.env.NEXTAUTH_URL, env.NEXTAUTH_URL)
         const res = await fetch(`${env.NEXTAUTH_URL}/api/auth/providers`)
         const data = await res.json() as Record<string, string>[];
         if (!res.ok) {
