@@ -1,4 +1,4 @@
-// import { headers } from "next/headers";
+import { headers } from "next/headers";
 
 import { env } from "~/env";
 import { redirect } from "next/navigation";
@@ -6,6 +6,9 @@ import { getServerAuthSession } from "~/server/auth";
 
 export default async function Login() {
     const session = await getServerAuthSession();
+    console.log("------------🤯🤯🤯HEADERS!!🤯🤯🤯--------")
+    headers().forEach((val, key) => console.log(key, val))
+    console.log("------------🤯🤯🤯HEADERS!!🤯🤯🤯--------")
 
     if (session?.user) {
         return redirect('/simulation')
