@@ -13,11 +13,12 @@ export const fetchCsrfToken = async () => {
             process.env.NEXTAUTH_URL
         ).path
         console.log("fetch url", `${baseUrlServer}${basePathServer}/csrf`)
+        console.log('cookies', cookies().toString())
 
         const options: RequestInit = {
             headers: {
                 "Content-Type": "application/json",
-                cookie: cookies().toString()
+                // cookie: cookies().toString()
             },
         }
         const res = await fetch(`${baseUrlServer}${basePathServer}/csrf`, options);
