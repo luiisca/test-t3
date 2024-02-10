@@ -7,7 +7,7 @@ export const fetchCsrfToken = async () => {
         const res = await fetch(`${protocal}://${host}/api/auth/csrf`, { cache: "no-store" });
 
         console.warn('CSRF RESPONSE 🎁', res)
-        const dataTest = await res.json()
+        const dataTest = await res.json() as { csrfToken: string };
         console.warn('CSRF RESPONSE.json 🎁', dataTest)
 
         if (!res.ok) {
