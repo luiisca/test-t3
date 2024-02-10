@@ -34,24 +34,24 @@ export default async function Login() {
         return (
             <div>
                 <p>Authenticated!</p>
-                <form
-                    method="POST"
-                    action={`${env.NEXTAUTH_URL}/api/auth/signin/github`}
-                    className="flex flex-col group gap-2">
-
-                    <input
-                        hidden
-                        value={csrfToken}
-                        name="csrfToken"
-                        readOnly />
-
-                    <button
-                        className="outline-none 
-            focus:underline focus:decoration-red-600 
-            focus:group-valid:decoration-green-600">
-                        Log in
-                    </button>
-                </form>
+                {/*     <form */}
+                {/*         method="POST" */}
+                {/*         action={`${env.NEXTAUTH_URL}/api/auth/signin/github`} */}
+                {/*         className="flex flex-col group gap-2"> */}
+                {/**/}
+                {/*         <input */}
+                {/*             hidden */}
+                {/*             value={csrfToken} */}
+                {/*             name="csrfToken" */}
+                {/*             readOnly /> */}
+                {/**/}
+                {/*         <button */}
+                {/*             className="outline-none  */}
+                {/* focus:underline focus:decoration-red-600  */}
+                {/* focus:group-valid:decoration-green-600"> */}
+                {/*             Log in */}
+                {/*         </button> */}
+                {/*     </form> */}
             </div>
         )
     }

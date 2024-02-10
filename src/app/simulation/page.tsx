@@ -8,7 +8,12 @@ export default async function Simulation() {
     const session = await getServerAuthSession();
 
     if (!session?.user) {
-        return redirect('/auth/login')
+        // return redirect('/auth/login')
+        return (
+            <p>
+                Not Authenticated!
+            </p>
+        )
     } else {
         const csrfToken = (await fetch(`${env.NEXTAUTH_URL}/api/auth/csrf`, {
             headers: headers()
