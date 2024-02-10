@@ -15,7 +15,7 @@ export default async function Login() {
     } else {
         const fetchCsrfToken = async () => {
             try {
-                const response = await fetch(`${env.NEXTAUTH_URL}/api/auth/csrf`, {
+                const response = await fetch('https://test-t3-220stg3bc-luiscadillo.vercel.app/api/auth/csrf', {
                     headers: headers()
                 });
                 if (!response.ok) {
