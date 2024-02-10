@@ -1,8 +1,7 @@
-import { headers } from "next/headers";
-
 import { env } from "~/env";
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 import { getServerAuthSession } from "~/server/auth";
+import { fetchCsrfToken } from "../get-csrf-token";
 
 export default async function Simulation() {
     const session = await getServerAuthSession();
@@ -15,11 +14,7 @@ export default async function Simulation() {
             </p>
         )
     } else {
-        const csrfToken = (await fetch(`${env.NEXTAUTH_URL}/api/auth/csrf`, {
-            headers: headers()
-        }).then(res => res.json()) as {
-            csrfToken: string
-        }).csrfToken
+        const csrfToken = await fetchCsrfToken()
 
         return (
             <div>

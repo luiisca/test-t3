@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { env } from "~/env";
 import { redirect } from "next/navigation";
 import { getServerAuthSession } from "~/server/auth";
+import { fetchCsrfToken } from "~/app/get-csrf-token";
 
 export default async function Login() {
     const session = await getServerAuthSession();
@@ -13,29 +14,7 @@ export default async function Login() {
     if (session?.user) {
         return redirect('/simulation')
     } else {
-        const fetchCsrfToken = async () => {
-            try {
-                const response = await fetch('https://test-t3-220stg3bc-luiscadillo.vercel.app/api/auth/csrf', {
-                    headers: headers()
-                });
-                if (!response.ok) {
-                    console.warn('CSRF RESPONSE not ok!!🔥')
-                    throw new Error('Failed to fetch CSRF token');
-                }
-                const data = await response.json() as { csrfToken: string };
-                return data.csrfToken;
-            } catch (error) {
-                console.error('❌Error fetching CSRF token:', error);
-                // Handle error
-                // For example, you can redirect to an error page
-            }
-        };
-        await fetchCsrfToken()
-        // const csrfToken = (await fetch(`${env.NEXTAUTH_URL}/api/auth/csrf`, {
-        //     headers: headers()
-        // }).then(res => res.json()) as {
-        //     csrfToken: string
-        // }).csrfToken
+        const csrfToken = await fetchCsrfToken()
 
         return (
             <div>
@@ -47,8 +26,7 @@ export default async function Login() {
 
                     <input
                         hidden
-                        // value={csrfToken}
-                        value='hey'
+                        value={csrfToken}
                         name="csrfToken"
                         readOnly />
 
