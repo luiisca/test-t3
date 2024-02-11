@@ -1,7 +1,6 @@
 import { unstable_noStore as noStore } from "next/cache";
 import Link from "next/link";
 
-import { CreatePost } from "~/app/_components/create-post";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 import { env } from "~/env";
@@ -9,7 +8,7 @@ import { redirect } from "next/navigation";
 
 export default async function Home({ searchParams }: { searchParams: { inflation: string } }) {
     noStore();
-    const hello = await api.post.hello.query({ text: "hello" });
+    // const hello = await api.post.hello.query({ text: "hello" });
     const session = await getServerAuthSession();
 
     return (
@@ -43,10 +42,6 @@ export default async function Home({ searchParams }: { searchParams: { inflation
                     </Link>
                 </div>
                 <div className="flex flex-col items-center gap-2">
-                    <p className="text-2xl text-white">
-                        {hello ? hello.greeting : "Loading tRPC query..."}
-                    </p>
-
                     <div className="flex flex-col items-center justify-center gap-4">
                         <p className="text-center text-2xl text-white">
                             {session && <span>Logged in as {session.user?.name}</span>}
