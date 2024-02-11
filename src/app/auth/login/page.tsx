@@ -1,9 +1,10 @@
 import { cookies } from "next/headers";
-import { getCsrfToken } from "next-auth/react";
+import { getCsrfToken, signIn } from "next-auth/react";
 
 import { env } from "~/env";
 import { redirect } from "next/navigation";
 import { getServerAuthSession } from "~/server/auth";
+import LoginBttn from "./login-bttn";
 
 export default async function Login() {
     const session = await getServerAuthSession();
@@ -31,26 +32,39 @@ export default async function Login() {
         console.error(error)
     }
 
+    // async function signInAction() {
+    //     'use server'
+    // }
+
     return (
         <div>
-            <form
-                method="POST"
-                action={`${env.NEXTAUTH_URL}/api/auth/signin/github`}
-                className="flex flex-col group gap-2">
-
-                <input
-                    hidden
-                    value={csrfToken}
-                    name="csrfToken"
-                    readOnly />
-
-                <button
-                    className="outline-none 
-                focus:underline focus:decoration-red-600 
-                focus:group-valid:decoration-green-600">
-                    Log in
-                </button>
-            </form>
+            <LoginBttn />
+            {/* <form method="POST" action={signInAction}> */}
+            {/*     <button */}
+            {/*         className="outline-none  */}
+            {/*     focus:underline focus:decoration-red-600  */}
+            {/*     focus:group-valid:decoration-green-600"> */}
+            {/*         Log in with Github */}
+            {/*     </button> */}
+            {/* </form> */}
+            {/* <form */}
+            {/*     method="POST" */}
+            {/*     action={`${env.NEXTAUTH_URL}/api/auth/signin/github`} */}
+            {/*     className="flex flex-col group gap-2"> */}
+            {/**/}
+            {/*     <input */}
+            {/*         hidden */}
+            {/*         value={csrfToken} */}
+            {/*         name="csrfToken" */}
+            {/*         readOnly /> */}
+            {/**/}
+            {/*     <button */}
+            {/*         className="outline-none  */}
+            {/*     focus:underline focus:decoration-red-600  */}
+            {/*     focus:group-valid:decoration-green-600"> */}
+            {/*         Log in */}
+            {/*     </button> */}
+            {/* </form> */}
             {/* <form */}
             {/*     method="POST"> */}
             {/*     <input */}
