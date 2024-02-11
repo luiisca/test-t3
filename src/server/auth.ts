@@ -119,6 +119,7 @@ export const authOptions: NextAuthOptions = {
          */
     ],
     secret: process.env.NEXTAUTH_SECRET,
+    debug: true,
 };
 /**
  * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.

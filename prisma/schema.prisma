@@ -7,41 +7,26 @@ generator client {
 
 datasource db {
     provider = "cockroachdb"
-    // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-    // Further reading:
-    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
     url      = env("DATABASE_URL")
-}
-
-model Post {
-    id        BigInt   @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    createdBy   User   @relation(fields: [createdById], references: [id])
-    createdById String
-
-    @@index([name])
 }
 
 // Necessary for Next auth
 model Account {
     id                       String  @id @default(cuid())
-    userId                   String
     type                     String
     provider                 String
     providerAccountId        String
-    refresh_token            String? // @db.Text
-    access_token             String? // @db.Text
+    refresh_token            String?
+    access_token             String?
     expires_at               Int?
     token_type               String?
     scope                    String?
-    id_token                 String? // @db.Text
+    id_token                 String?
     session_state            String?
-    user                     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
     refresh_token_expires_in Int
+
+    user   User?  @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId String
 
     @@unique([provider, providerAccountId])
 }
@@ -49,20 +34,42 @@ model Account {
 model Session {
     id           String   @id @default(cuid())
     sessionToken String   @unique
-    userId       String
     expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user         User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId       String
 }
 
 model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
-    posts         Post[]
+    id                  String     @id @default(cuid())
+    /// @zod.custom(imports.username)
+    username            String?
+    name                String?
+    email               String?    @unique
+    emailVerified       DateTime?
+    avatar              String?
+    completedOnboarding Boolean    @default(false)
+    accounts            Account[]
+    sessions            Session[]
+    Feedback            Feedback[]
+
+    country     String @default("US")
+    inflation   Int    @default(8)
+    currency    String @default("USD")
+    investPerc  Int    @default(80)
+    indexReturn Int    @default(7)
+
+    salary     Salary[]
+    categories Category[]
+}
+
+model Feedback {
+    id      BigInt   @id @default(autoincrement())
+    date    DateTime @default(now())
+    rating  String
+    comment String?
+
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId String
 }
 
 model VerificationToken {
@@ -71,4 +78,60 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Salary {
+    id         BigInt   @id @default(autoincrement())
+    title      String   @default("Salary")
+    currency   String   @default("USD")
+    amount     Int
+    taxType    String   @default("perCat")
+    taxPercent Int      @default(30)
+    variance   Period[]
+
+    user   User   @relation(fields: [userId], references: [id])
+    userId String
+}
+
+model Period {
+    id     BigInt @id @default(autoincrement())
+    from   Int
+    amount Int
+
+    salary     Salary @relation(fields: [salaryId], references: [id], onDelete: Cascade)
+    salaryId   BigInt
+    taxPercent Int    @default(30)
+}
+
+model Category {
+    id        BigInt @id @default(autoincrement())
+    title     String
+    budget    Int
+    currency  String @default("USD")
+    type      String @default("outcome")
+    inflType  String @default("perCat")
+    country   String
+    inflVal   Int
+    icon      String
+    freqType  String @default("perCat")
+    frequency Int    @default(12)
+
+    user    User     @relation(fields: [userId], references: [id])
+    userId  String
+    records Record[]
+}
+
+model Record {
+    id        BigInt  @id @default(autoincrement())
+    title     String?
+    amount    Int
+    type      String
+    frequency Int
+    inflType  Boolean @default(true)
+    country   String
+    inflation Int
+    currency  String
+
+    category   Category @relation(fields: [categoryId], references: [id])
+    categoryId BigInt
 }
