@@ -23,7 +23,7 @@ export default async function Login() {
         <div>
             <form
                 method="POST"
-                action={`${env.NEXTAUTH_URL}/api/auth/signin/github`}
+                action={`${env.NEXTAUTH_URL}/api/auth/signin/github?callbackUrl=${env.NEXTAUTH_URL}/simulation`}
                 className="flex flex-col group gap-2">
 
                 <input

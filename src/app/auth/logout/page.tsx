@@ -4,7 +4,7 @@ export default async function Logout() {
     return (
         <div>
             <div>You have logged out!</div>
-            <Link href='/'>Go to home</Link>
+            <Link href='/auth/login'>Go back to login page</Link>
         </div>
     )
 }

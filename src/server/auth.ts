@@ -18,6 +18,7 @@ import { env } from "~/env";
 import { db } from "~/server/db";
 import { TRPCError } from "@trpc/server";
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
+import { redirect } from 'next/navigation';
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`

@@ -25,7 +25,7 @@ export default async function Simulation() {
 
             <form
                 method="POST"
-                action={`${env.NEXTAUTH_URL}/api/auth/signout`}
+                action={`${env.NEXTAUTH_URL}/api/auth/signout?callbackUrl=${env.NEXTAUTH_URL}/auth/logout`}
                 className="flex flex-col group gap-2">
 
                 <input
