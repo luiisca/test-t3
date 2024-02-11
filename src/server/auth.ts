@@ -42,8 +42,7 @@ declare module "next-auth" {
 }
 
 async function sendVerificationRequest(params: SendVerificationRequestParams) {
-    const { identifier, url, provider, theme } = params
-    const { host } = new URL(url)
+    const { identifier, url, provider } = params
     // NOTE: You are not required to use `nodemailer`, use whatever you want.
     const transport = createTransport(provider.server as Record<string, string>)
 
@@ -119,7 +118,6 @@ export const authOptions: NextAuthOptions = {
          * @see https://next-auth.js.org/providers/github
          */
     ],
-    secret: process.env.NEXTAUTH_SECRET,
     debug: true,
 };
 /**
