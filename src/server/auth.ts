@@ -76,13 +76,19 @@ export const authOptions: NextAuthOptions = {
         verifyRequest: "/auth/verify", // (used for check email message)
     },
     callbacks: {
-        session: ({ session, user }) => ({
-            ...session,
-            user: {
-                ...session.user,
-                id: user.id,
-            },
-        }),
+        session: ({ session, user }) => {
+            const obj = {
+                ...session,
+                user: {
+                    ...session.user,
+                    id: user.id,
+                },
+            }
+
+            console.log('----------------🙌SIGNIN callback------')
+            console.log('signIn callback', obj)
+            return obj
+        },
     },
     adapter: PrismaAdapter(db),
     providers: [
