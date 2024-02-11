@@ -8,7 +8,7 @@ import { getServerAuthSession } from "~/server/auth";
 export default async function Login({
     searchParams,
 }: {
-    searchParams: { [key: string]: string | string[] | undefined } & { error: string }
+    searchParams: Record<string, string | string[] | undefined> & { error: string }
 }) {
     const session = await getServerAuthSession();
     if (session?.user) {
